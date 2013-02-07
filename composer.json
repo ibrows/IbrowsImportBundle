@@ -10,8 +10,8 @@
         "ibrows/annotation-reader": "dev-master"
     },
     "autoload": {
-        "psr-0": { "Ibrows\\Bundle\\SonataAdminAnnotationBundle": "" }
+        "psr-0": { "Ibrows\\ImportBundle": "" }
     },
-    "target-dir": "Ibrows/Bundle/SonataAdminAnnotationBundle",
+    "target-dir": "Ibrows/ImportBundlee",
     "minimum-stability": "dev"
 }
