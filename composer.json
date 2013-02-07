@@ -12,6 +12,6 @@
     "autoload": {
         "psr-0": { "Ibrows\\ImportBundle": "" }
     },
-    "target-dir": "Ibrows/ImportBundlee",
+    "target-dir": "Ibrows/ImportBundle",
     "minimum-stability": "dev"
 }
