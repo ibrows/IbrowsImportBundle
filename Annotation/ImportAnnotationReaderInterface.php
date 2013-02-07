@@ -3,6 +3,8 @@
 namespace Ibrows\ImportBundle\Annotation;
 
 
+use Ibrows\AnnotationReader\AnnotationReaderInterface;
+
 interface ImportAnnotationReaderInterface extends AnnotationReaderInterface
 {
     const
