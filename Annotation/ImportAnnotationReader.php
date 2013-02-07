@@ -3,8 +3,10 @@
 namespace Ibrows\ImportBundle\Annotation;
 use Ibrows\ImportBundle\Annotation\Mapping\MappingInterface;
 use Ibrows\ImportBundle\Annotation\Identifier\IdentifierInterface;
+use Ibrows\AnnotationReader\AnnotationReader;
 
-class ImportAnnotationReader extends AbstractAnnotationReader implements ImportAnnotationReaderInterface
+
+class ImportAnnotationReader extends AnnotationReader implements ImportAnnotationReaderInterface
 {
 
     /* (non-PHPdoc)
