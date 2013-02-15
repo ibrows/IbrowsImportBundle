@@ -163,11 +163,13 @@ abstract class AbstractImporter implements ImporterInterface
         if(count($mappingAnnotations) > 0){
             throw new NotAllRowsGivenException('Not all Mapping-Rows for Entity "'. get_class($entity) .'" on rowkey "'.$key .'" found: "'. implode('", "', array_keys($mappingAnnotations)) .'"');
         }
+
         foreach($methodAnnotations as $methodName => $annotation){
              if($annotation->getContext() == MethodInterface::CONTEXT_POST_BUILD){
                     $entity->$methodName($key,$fromAlreadyExisting);
              }
         }
+
         return $entity;
     }
 
