@@ -7,8 +7,19 @@ use Doctrine\Common\Collections\Collection;
 
 class ResultBag
 {
+    /**
+     * @var array
+     */
     protected $changed = array();
+
+    /**
+     * @var array
+     */
     protected $new = array();
+
+    /**
+     * @var array
+     */
     protected $skipped = array();
 
     /**
@@ -21,13 +32,16 @@ class ResultBag
         $this->removing = new ArrayCollection();
     }
 
+    /**
+     * @param mixed $entity
+     */
     public function unsetRemoving($entity)
     {
         $this->removing->removeElement($entity);
     }
 
     /**
-     * @param null $entity
+     * @param mixed $entity
      * @return ResultBag
      */
     public function addSkipped($entity = null)
