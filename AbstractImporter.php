@@ -166,7 +166,7 @@ abstract class AbstractImporter implements ImporterInterface
 
         foreach($methodAnnotations as $methodName => $annotation){
              if($annotation->getContext() == MethodInterface::CONTEXT_POST_BUILD){
-                    $entity->$methodName($key,$fromAlreadyExisting);
+                $entity->$methodName($key,$fromAlreadyExisting);
              }
         }
 
