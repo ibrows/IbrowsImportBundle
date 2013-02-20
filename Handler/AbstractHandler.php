@@ -121,6 +121,7 @@ abstract class AbstractHandler implements HandlerInterface
 
         if($this->softdeletable){
             $em->getFilters()->enable('softdeleteable');
+            $output->writeln('<comment>---Enable softdeleteable---</comment>');
         }
     }
 
