@@ -1,10 +1,9 @@
 <?php
 
 namespace Ibrows\ImportBundle\Handler;
+
 use Ibrows\ImportBundle\ImporterInterface;
-
 use Ibrows\ImportBundle\Result\ResultBag;
-
 use Ibrows\ImportBundle\Exception\MethodNotFoundException;
 
 use Symfony\Component\Console\Output\OutputInterface;
