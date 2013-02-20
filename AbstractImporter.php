@@ -81,7 +81,7 @@ abstract class AbstractImporter implements ImporterInterface
     }
 
     /**
-     * @param str $key of current row
+     * @param string $key of current row
      * @param RowInterface $row
      * @param $className
      */
@@ -112,11 +112,11 @@ abstract class AbstractImporter implements ImporterInterface
     }
 
     /**
-     * @param str $key of current row
+     * @param string $key of current row
      * @param RowInterface $row
      * @param object $entity
      * @param bool $fromAlreadyExisting
-     * @return mixed
+     * @return mixed|null $entity
      * @throws NotAllRowsGivenException
      * @throws NoImportAnnotationsFoundException
      * @throws MethodNotFoundException
@@ -124,7 +124,7 @@ abstract class AbstractImporter implements ImporterInterface
     protected function buildEntity($key, RowInterface $row, $entity, $fromAlreadyExisting = false)
     {
         $mappingAnnotations = $this->annotationReader->getMappingAnnotations($entity);
-        $methodAnnotations = $this->annotationReader->getMethodAnnotations($entity);
+
         if(!$mappingAnnotations){
             throw new NoImportAnnotationsFoundException('No Import-Annotations on "'. get_class($entity) .'"');
         }
@@ -145,7 +145,6 @@ abstract class AbstractImporter implements ImporterInterface
                 }
 
                 $fieldValue = $field->getValue();
-
                 if(trim($fieldValue) OR !$typeAnnotation->ignoreBlank()){
                     $value = $typeAnnotation->transformToPHP($fieldValue);
                     $entity->$method($value);
@@ -154,7 +153,9 @@ abstract class AbstractImporter implements ImporterInterface
                 unset($mappingAnnotations[$propertyName]);
                 $isMappingField = true;
             }
-
+            /**
+             * @todo setData is too static
+             */
             if(false === $isMappingField && method_exists($entity, 'setData')){
                 $entity->setData($field->getName(), $field->getValue());
             }
@@ -164,13 +165,26 @@ abstract class AbstractImporter implements ImporterInterface
             throw new NotAllRowsGivenException('Not all Mapping-Rows for Entity "'. get_class($entity) .'" on rowkey "'.$key .'" found: "'. implode('", "', array_keys($mappingAnnotations)) .'"');
         }
 
-        foreach($methodAnnotations as $methodName => $annotation){
-             if($annotation->getContext() == MethodInterface::CONTEXT_POST_BUILD){
-                $entity->$methodName($key,$fromAlreadyExisting);
-             }
-        }
+        $methodAnnotations = $this->annotationReader->getMethodAnnotations($entity);
+        $this->invokeMethodCallbacks($methodAnnotations, MethodInterface::CONTEXT_POST_BUILD, $key, $entity, $fromAlreadyExisting);
 
         return $entity;
+    }
+
+    /**
+     * @param MethodInterface[] $methodAnnotations
+     * @param string $context
+     * @param string $key
+     * @param mixed $entity
+     * @param bool $fromAlreadyExisting
+     */
+    protected function invokeMethodCallbacks(array $methodAnnotations, $context, $key, $entity, $fromAlreadyExisting)
+    {
+        foreach($methodAnnotations as $methodName => $annotation){
+            if($annotation->getContext() == $context){
+                $entity->$methodName($key, $fromAlreadyExisting);
+            }
+        }
     }
 
     /**
@@ -220,14 +234,14 @@ abstract class AbstractImporter implements ImporterInterface
         $mappingAnnotationsA = $this->annotationReader->getMappingAnnotations($builtEntity);
         $mappingAnnotationsB = $this->annotationReader->getMappingAnnotations($alreadyExisting);
 
-        foreach($this->annotationReader->getCompareAnnotations($builtEntity) as $propertyName =>  $annotation){
+        foreach($this->annotationReader->getCompareAnnotations($builtEntity) as $propertyName => $annotation){
             if($annotation instanceof Exclude){
                 unset($mappingAnnotationsA[$propertyName]);
             }else{
                 $mappingAnnotationsA[$propertyName] = $annotation;
             }
         }
-        foreach($this->annotationReader->getCompareAnnotations($alreadyExisting) as $propertyName =>  $annotation){
+        foreach($this->annotationReader->getCompareAnnotations($alreadyExisting) as $propertyName => $annotation){
             if($annotation instanceof Exclude){
                 unset($mappingAnnotationsB[$propertyName]);
             }else{
