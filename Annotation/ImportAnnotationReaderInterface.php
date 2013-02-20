@@ -2,6 +2,10 @@
 
 namespace Ibrows\ImportBundle\Annotation;
 
+use Ibrows\ImportBundle\Annotation\Identifier\IdentifierInterface;
+use Ibrows\ImportBundle\Annotation\Mapping\MappingInterface;
+use Ibrows\ImportBundle\Annotation\Method\MethodInterface;
+use Ibrows\ImportBundle\Annotation\Compare\CompareInterface;
 
 use Ibrows\AnnotationReader\AnnotationReaderInterface;
 
