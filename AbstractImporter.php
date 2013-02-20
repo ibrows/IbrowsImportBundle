@@ -4,9 +4,8 @@ namespace Ibrows\ImportBundle;
 
 use Ibrows\ImportBundle\Annotation\Compare\Exclude;
 
-use Ibrows\ImportBundle\Annotation\Compare\CompareInterface;
-
 use Ibrows\ImportBundle\Annotation\Method\MethodInterface;
+use Ibrows\ImportBundle\Annotation\Compare\CompareInterface;
 
 use Ibrows\ImportBundle\Annotation\ImportAnnotationReaderInterface;
 
@@ -114,7 +113,7 @@ abstract class AbstractImporter implements ImporterInterface
     /**
      * @param string $key of current row
      * @param RowInterface $row
-     * @param object $entity
+     * @param mixed $entity
      * @param bool $fromAlreadyExisting
      * @return mixed|null $entity
      * @throws NotAllRowsGivenException
@@ -241,6 +240,7 @@ abstract class AbstractImporter implements ImporterInterface
                 $mappingAnnotationsA[$propertyName] = $annotation;
             }
         }
+
         foreach($this->annotationReader->getCompareAnnotations($alreadyExisting) as $propertyName => $annotation){
             if($annotation instanceof Exclude){
                 unset($mappingAnnotationsB[$propertyName]);
@@ -256,8 +256,8 @@ abstract class AbstractImporter implements ImporterInterface
     }
 
     /**
-     * @param $entity
-     * @param $annotations
+     * @param mixed $entity
+     * @param CompareInterface[] $annotations
      * @param bool $transformValues
      * @return array
      * @throws MethodNotFoundException
