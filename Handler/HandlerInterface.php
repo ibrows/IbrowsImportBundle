@@ -12,15 +12,26 @@ interface HandlerInterface
 {
     /**
      * @param ImporterInterface $importer
-     * @return AbstractHandler
+     * @return HandlerInterface
      */
     public function setImporter(ImporterInterface $importer);
 
     /**
      * @param EntityManager $entityManager
-     * @return AbstractHandler
+     * @return HandlerInterface
      */
     public function setEntityManager(EntityManager $entityManager);
+
+    /**
+     * @return bool
+     */
+    public function getSoftdeletable();
+
+    /**
+     * @param bool $flag
+     * @return HandlerInterface
+     */
+    public function setSoftdeletable($flag);
 
     /**
      * @param mixed $data
