@@ -283,6 +283,4 @@ abstract class AbstractImporter implements ImporterInterface
 
         return $compareValues;
     }
-
-
 }
