@@ -103,7 +103,7 @@ abstract class AbstractImporter implements ImporterInterface
         }
 
         $areSameEntities = $this->compareEntities($builtEntity, $alreadyExistingEntity);
-        if(!$areSameEntities || $alreadyExistingEntity->getDeletedAt() !== null){
+        if(!$areSameEntities || (method_exists($alreadyExistingEntity, 'getDeletedAt') && $alreadyExistingEntity->getDeletedAt() !== null)){
             $resultBag->addChanged($this->buildEntity($key, $row, $alreadyExistingEntity, true));
         }else{
             $resultBag->addSkipped($alreadyExistingEntity);
