@@ -1,7 +1,7 @@
 {
     "name": "ibrows/import-bundle",
     "description": "Manage generic Import over annotations",
-    "keywords": ["ibrows", "annotation"],
+    "keywords": ["ibrows", "import", "annotation"],
     "type": "symfony-bundle",
     "license": "MIT",
     "require": {
