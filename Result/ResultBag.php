@@ -23,6 +23,11 @@ class ResultBag
     protected $skipped = array();
 
     /**
+     * @var int
+     */
+    protected $processed = 0;
+
+    /**
      * @var Collection
      */
     protected $removing;
