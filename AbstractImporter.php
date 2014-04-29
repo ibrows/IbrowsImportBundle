@@ -144,7 +144,7 @@ abstract class AbstractImporter implements ImporterInterface
                 }
 
                 $fieldValue = $field->getValue();
-                if(trim($fieldValue) OR !$typeAnnotation->ignoreBlank()){
+                if(((is_scalar($fieldValue) && trim($fieldValue)) || is_array($fieldValue) && count($fieldValue)) OR !$typeAnnotation->ignoreBlank()){
                     $value = $typeAnnotation->transformToPHP($fieldValue);
                     $entity->$method($value);
                 }
