@@ -38,7 +38,7 @@ class ResultBag
     }
 
     /**
-     * @param mixed $entity
+     * @param object $entity
      */
     public function unsetRemoving($entity)
     {
@@ -46,7 +46,7 @@ class ResultBag
     }
 
     /**
-     * @param mixed $entity
+     * @param object $entity
      * @return ResultBag
      */
     public function addSkipped($entity = null)
@@ -101,7 +101,7 @@ class ResultBag
     }
 
     /**
-     * @param mixed $entity
+     * @param object $entity
      * @return ResultBag
      */
     public function addChanged($entity)
@@ -131,7 +131,7 @@ class ResultBag
     }
 
     /**
-     * @param mixed $entity
+     * @param object $entity
      * @return ResultBag
      */
     public function addNew($entity)
@@ -179,5 +179,38 @@ class ResultBag
     public function hasChanges()
     {
         return $this->countChanged() > 0 || $this->countNew() > 0;
+    }
+
+    /**
+     * @param array $skipped
+     * @return $this
+     */
+    public function setSkipped(array $skipped = array())
+    {
+        $this->skipped = $skipped;
+
+        return $this;
+    }
+
+    /**
+     * @param array $new
+     * @return $this
+     */
+    public function setNew(array $new = array())
+    {
+        $this->new = $new;
+
+        return $this;
+    }
+
+    /**
+     * @param array $changed
+     * @return $this
+     */
+    public function setChanged(array $changed = array())
+    {
+        $this->changed = $changed;
+
+        return $this;
     }
 }
