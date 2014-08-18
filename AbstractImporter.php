@@ -127,7 +127,6 @@ abstract class AbstractImporter implements ImporterInterface
         if(!$mappingAnnotations){
             throw new NoImportAnnotationsFoundException('No Import-Annotations on "'. get_class($entity) .'"');
         }
-
         foreach($row->getFields() as $field){
             $fieldName = $field->getName();
             $isMappingField = false;
@@ -194,17 +193,7 @@ abstract class AbstractImporter implements ImporterInterface
      */
     protected function getAlreadyExistingEntity($entity)
     {
-        $identifierTypeAnnotations = $this->annotationReader->getIdentifierAnnotations($entity);
-
-        foreach($identifierTypeAnnotations as $propertyName => $identifierAnnotation){
-            $method = $identifierAnnotation->getGetterName() ?: 'get'.ucfirst($propertyName);
-
-            if(!method_exists($entity, $method)){
-                throw new MethodNotFoundException('Method "'. $method .'" not found in "'. get_class($entity) .'"');
-            }
-
-            $searchValue = $entity->$method();
-
+        foreach($this->getIdentifiersForEntity($entity) as $propertyName => $searchValue){
             if($searchValue){
                 $alreadyExistingEntity = $this->entityManager->getRepository(get_class($entity))->findOneBy(array(
                     $propertyName => $searchValue
@@ -215,12 +204,28 @@ abstract class AbstractImporter implements ImporterInterface
                 }
             }
         }
+        return null;
+    }
+
+    protected function getIdentifiersForEntity($entity){
+        $ids = array();
+        $identifierTypeAnnotations = $this->annotationReader->getIdentifierAnnotations($entity);
+
+        foreach($identifierTypeAnnotations as $propertyName => $identifierAnnotation){
+            $method = $identifierAnnotation->getGetterName() ?: 'get'.ucfirst($propertyName);
+
+            if(!method_exists($entity, $method)){
+                throw new MethodNotFoundException('Method "'. $method .'" not found in "'. get_class($entity) .'"');
+            }
+
+            $searchValue = $entity->$method();
+            $ids[$propertyName] = $searchValue;
+        }
 
         if(!$identifierTypeAnnotations){
             throw new ImportIdentifierNotFoundException('Need IdentifierAnnotation on "'. get_class($entity) .'"');
         }
-
-        return null;
+        return $ids;
     }
 
     /**
