@@ -15,6 +15,8 @@ abstract class BulkImporter extends AbstractImporter
     protected $identifiersClass = '';
     protected $inserts = array();
     protected $updates = array();
+    protected $processedInsertIds = array();
+    protected $processedUpdateIds = array();
     protected $dbIdentifier = 'id';
     protected $dbIdentifierGetter = 'getId';
     protected $alias = 'e';
@@ -28,6 +30,7 @@ abstract class BulkImporter extends AbstractImporter
     {
         $this->importHashGenerator = $importHashGenerator;
     }
+
 
     protected function importRow($index, $row, $className)
     {
@@ -57,9 +60,29 @@ abstract class BulkImporter extends AbstractImporter
     }
 
     public function resetIdentifier(){
+        $this->processedInsertIds = array();
+        $this->processedUpdateIds = array();
         $this->identifiers = array();
         $this->identifiersClass = '';
     }
+
+    /**
+     * @return array
+     */
+    public function getProcessedInsertIds()
+    {
+        return $this->processedInsertIds;
+    }
+
+    /**
+     * @return array
+     */
+    public function getProcessedUpdateIds()
+    {
+        return $this->processedUpdateIds;
+    }
+
+
 
     public function flush(){
         $this->flushUpdates();
@@ -80,7 +103,6 @@ abstract class BulkImporter extends AbstractImporter
         if(!$current){
             return false;
         }
-        $count = count($this->updates);
         $updated = 0;
         $class = get_class($current);
         $ids = array_keys($this->updates);
@@ -89,15 +111,15 @@ abstract class BulkImporter extends AbstractImporter
 
         foreach($existingEntities as $entity){
             $method = $this->getDbIdentifierGetter();
-
-            if($this->checkForUpdates($entity, $this->updates[$entity->$method()])){
-
-                $merged = $this->merge($entity,  $this->updates[$entity->$method()]);
-                if($this->isImportableEntity($merged) && $this->isImportableEntity($this->updates[$entity->$method()])){
+            $id = $entity->$method();
+            if($this->checkForUpdates($entity, $this->updates[$id])){
+                $merged = $this->merge($entity,  $this->updates[$id]);
+                if($this->isImportableEntity($merged) && $this->isImportableEntity($this->updates[$id])){
                     $merged->setUpdatedAt(new \DateTime());
                     $merged->setImportHash( $this->importHashGenerator->generateFromEntity($merged) );
                 }
                 $this->entityManager->persist($merged);
+                $this->processedUpdateIds[$id] = $id;
                 $hasChanges = true;
                 $updated++;
             }
@@ -141,6 +163,11 @@ abstract class BulkImporter extends AbstractImporter
             $this->entityManager->persist($entity);
         }
         $this->entityManager->flush();
+        foreach($this->inserts as $entity){
+            $method = $this->getDbIdentifierGetter();
+            $id = $entity->$method();
+            $this->processedInsertIds[$id] = $id;
+        }
         $this->entityManager->clear();
         $this->inserts = array();
         return $count;
