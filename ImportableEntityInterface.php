@@ -11,7 +11,7 @@ namespace Ibrows\ImportBundle;
 
 interface ImportableEntityInterface {
     public function getImportHash();
-    public function setImportHash($hash);
+    public function setImportHash($hash = null);
     public function getUpdatedAt();
-    public function setUpdatedAt($date);
+    public function setUpdatedAt(\DateTime $date = null);
 } 
