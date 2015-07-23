@@ -91,7 +91,7 @@ abstract class BulkImporter extends AbstractImporter
 
     protected function update($entity, $id){
         $this->updates[$id] = $entity;
-        if($this->getStepSize() !== 0 && sizeof($this->updates)>$this->getStepSize()){
+        if($this->getStepSize() !== 0 && sizeof($this->updates)>=$this->getStepSize()){
             $this->flushUpdates();
         }
     }
@@ -99,7 +99,6 @@ abstract class BulkImporter extends AbstractImporter
     protected function flushUpdates(){
 
         $current = current($this->updates);
-
         if(!$current){
             return false;
         }
