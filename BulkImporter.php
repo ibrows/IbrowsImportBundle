@@ -194,6 +194,11 @@ abstract class BulkImporter extends AbstractImporter
                 $existing->$method($value);
             }
         }
+        if(method_exists($new,'getData') && method_exists($existing, 'setData')){
+            foreach($new->getData() as $key => $value){
+                $existing->setData($key, $value);
+            }
+        }
         return $existing;
     }
 
