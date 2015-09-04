@@ -37,4 +37,9 @@ interface MappingInterface extends ResolveByImporterInterface
      * @return bool
      */
     public function ignoreBlank();
+
+    /**
+     * @return mixed
+     */
+    public function ignoreNotExistent();
 }

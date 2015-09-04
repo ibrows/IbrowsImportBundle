@@ -28,6 +28,11 @@ abstract class AbstractMapping implements MappingInterface
     public $ignoreBlank = false;
 
     /**
+     * @var bool
+     */
+    public $ignoreNotExistent = false;
+
+    /**
      * @return string
      */
     public function getFieldName()
@@ -76,4 +81,22 @@ abstract class AbstractMapping implements MappingInterface
     {
         return $value;
     }
+
+    /**
+     * @return boolean
+     */
+    public function isIgnoreNotExistent()
+    {
+        return $this->ignoreNotExistent;
+    }
+
+    /**
+     * @param boolean $ignoreNotExistent
+     */
+    public function setIgnoreNotExistent($ignoreNotExistent)
+    {
+        $this->ignoreNotExistent = $ignoreNotExistent;
+    }
+
+
 }

@@ -127,6 +127,7 @@ abstract class AbstractImporter implements ImporterInterface
         if(!$mappingAnnotations){
             throw new NoImportAnnotationsFoundException('No Import-Annotations on "'. get_class($entity) .'"');
         }
+
         foreach($row->getFields() as $field){
             $fieldName = $field->getName();
             $isMappingField = false;
@@ -156,6 +157,12 @@ abstract class AbstractImporter implements ImporterInterface
              */
             if(false === $isMappingField && method_exists($entity, 'setData')){
                 $entity->setData($field->getName(), $field->getValue());
+            }
+        }
+
+        foreach($mappingAnnotations as $propertyName => $annotation){
+            if($annotation->ignoreNotExistent()) {
+                unset($mappingAnnotations[$propertyName]);
             }
         }
 
