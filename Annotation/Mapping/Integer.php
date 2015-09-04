@@ -15,4 +15,5 @@ class Integer extends AbstractMapping
     {
         return (integer)$value;
     }
+
 }
