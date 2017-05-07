@@ -8,6 +8,14 @@ use Ibrows\ImportBundle\Tests\Stubs\DummyRow;
 
 class MappingTest extends AbstractTest
 {
+    protected function setUp()
+    {
+        if (PHP_MAJOR_VERSION >= 7) {
+            $this->markTestSkipped('Legacy annotations won\'t work with PHP 7 or higher, skipping those tests');
+        }
+        parent::setUp();
+    }
+
     public function testIntegerMapping()
     {
         $dummyImporter = $this->createDummyImporter();
