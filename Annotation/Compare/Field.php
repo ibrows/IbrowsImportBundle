@@ -1,12 +1,11 @@
 <?php
 
-namespace Ibrows\ImportBundle\Annotation\Mapping;
+namespace Ibrows\ImportBundle\Annotation\Compare;
 
 /**
  * @Annotation
- * @Target({"PROPERTY"})
  */
-class Field extends AbstractMapping
+class Field extends AbstractCompare
 {
     /**
      * @Required
@@ -54,15 +53,8 @@ class Field extends AbstractMapping
         $this->type = $type;
     }
 
-    public function transformToPHP($value)
-    {
-        $class = '\Ibrows\ImportBundle\Converter\\' . ucfirst($this->type) . 'Converter';
-        $obj = new $class();
-        return $obj->transformToPHP($value, $this);
-    }
-
-    public function transformToCompare($value)
-    {
+    public function  transformToCompare($value){
+        //proxy of mapping
         $class = '\Ibrows\ImportBundle\Converter\\' . ucfirst($this->type) . 'Converter';
         $obj = new $class();
         return $obj->transformToCompare($value, $this);
