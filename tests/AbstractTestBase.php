@@ -6,7 +6,7 @@ use Doctrine\Common\Annotations\AnnotationReader;
 use Ibrows\ImportBundle\Annotation\ImportAnnotationReader;
 use Ibrows\ImportBundle\Tests\Stubs\DummyImporter;
 
-class AbstractTest extends \PHPUnit_Framework_TestCase
+class AbstractTestBase extends \PHPUnit_Framework_TestCase
 {
     public function createAnnotationReader()
     {

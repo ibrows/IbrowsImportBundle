@@ -2,11 +2,11 @@
 
 namespace Ibrows\ImportBundle\Tests\Legacy;
 
-use Ibrows\ImportBundle\Tests\AbstractTest;
+use Ibrows\ImportBundle\Tests\AbstractTestBase;
 use Ibrows\ImportBundle\Tests\Legacy\Entities\ImportableEntity;
 use Ibrows\ImportBundle\Tests\Stubs\DummyRow;
 
-class MappingTest extends AbstractTest
+class MappingTest extends AbstractTestBase
 {
     protected function setUp()
     {

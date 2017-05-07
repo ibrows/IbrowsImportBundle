@@ -10,6 +10,13 @@
     </php>
 
     <testsuites>
+        <testsuite name="default">
+            <directory>tests</directory>
+            <exclude>tests/Legacy</exclude>
+        </testsuite>
+    </testsuites>
+
+    <testsuites>
         <testsuite name="legacy">
             <directory>tests/Legacy</directory>
         </testsuite>
