@@ -14,11 +14,20 @@
             <directory>tests</directory>
             <exclude>tests/Legacy</exclude>
         </testsuite>
-    </testsuites>
 
-    <testsuites>
         <testsuite name="legacy">
             <directory>tests/Legacy</directory>
         </testsuite>
     </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory>.</directory>
+            <exclude>
+                <directory>tests</directory>
+                <directory>vendor</directory>
+                <directory>DependencyInjection</directory>
+            </exclude>
+        </whitelist>
+    </filter>
 </phpunit>

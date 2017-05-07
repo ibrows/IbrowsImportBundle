@@ -1,11 +1,10 @@
 <?php
 
-namespace Ibrows\ImportBundle\Tests\Entities;
+namespace Ibrows\ImportBundle\Tests\Legacy\Entities;
 
 use Ibrows\ImportBundle\Annotation as Import;
-use Ibrows\ImportBundle\Tests\AbstractImportableEntity;
 
-class ImportableEntity extends AbstractImportableEntity
+class SimpleImportableEntity extends ImportableEntity
 {
     /**
      * @var int
@@ -46,7 +45,7 @@ class ImportableEntity extends AbstractImportableEntity
     /**
      * @var \DateTime
      * @Import\Mapping\Field(type="dateTime", fieldName="5")
-     * @Import\Compare\Field(type="dateTime")
+     * @Import\Compare\Exclude()
      */
     protected $datetimeProperty;
 
