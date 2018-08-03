@@ -13,7 +13,7 @@
     "autoload": {
         "psr-4": {
             "Ibrows\\ImportBundle\\": "",
-            "Ibrows\\ImportBundle\\Tests": "tests"
+            "Ibrows\\ImportBundle\\Tests\\": "tests"
         }
     },
     "require-dev": {
