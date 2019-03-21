@@ -2,10 +2,7 @@
 
 namespace Ibrows\ImportBundle;
 
-use Ibrows\ImportBundle\Annotation\Method\MethodInterface;
 use Ibrows\ImportBundle\Exception\MethodNotFoundException;
-use Ibrows\ImportBundle\Exception\NoImportAnnotationsFoundException;
-use Ibrows\ImportBundle\Exception\NotAllRowsGivenException;
 use Ibrows\ImportBundle\Generator\ImportHashGenerator;
 use Ibrows\ImportBundle\Row\RowInterface;
 
@@ -30,7 +27,6 @@ abstract class BulkImporter extends AbstractImporter
     {
         $this->importHashGenerator = $importHashGenerator;
     }
-
 
     protected function importRow($index, $row, $className)
     {
@@ -336,7 +332,4 @@ abstract class BulkImporter extends AbstractImporter
     {
         return $this->stepSize;
     }
-
-
-
 }

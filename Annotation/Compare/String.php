@@ -7,5 +7,4 @@ namespace Ibrows\ImportBundle\Annotation\Compare;
  */
 class String extends AbstractCompare
 {
-
 }

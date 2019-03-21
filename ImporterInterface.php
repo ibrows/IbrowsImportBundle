@@ -3,9 +3,7 @@
 namespace Ibrows\ImportBundle;
 
 use Ibrows\ImportBundle\Annotation\ImportAnnotationReaderInterface;
-
 use Ibrows\ImportBundle\Result\ResultBag;
-
 use Doctrine\ORM\EntityManager;
 
 interface ImporterInterface

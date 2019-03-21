@@ -12,7 +12,8 @@ abstract class AbstractMethod implements MethodInterface
     /* (non-PHPdoc)
      * @see Ibrows\ImportBundle\Annotation\Method.MethodInterface::getContext()
      */
-    public function getContext(){
+    public function getContext()
+    {
         return $this->context;
     }
 }

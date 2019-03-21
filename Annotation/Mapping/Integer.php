@@ -13,7 +13,6 @@ class Integer extends AbstractMapping
      */
     public function transformToPHP($value)
     {
-        return (integer)$value;
+        return (integer) $value;
     }
-
 }

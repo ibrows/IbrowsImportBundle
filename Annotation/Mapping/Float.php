@@ -13,6 +13,6 @@ class Float extends AbstractMapping
      */
     public function transformToPHP($value)
     {
-        return (float)$value;
+        return (float) $value;
     }
 }

@@ -32,7 +32,8 @@ abstract class AbstractHandler implements HandlerInterface
      * @param bool $flag
      * @return AbstractHandler
      */
-    public function setSoftDeletable($flag){
+    public function setSoftDeletable($flag)
+    {
         $this->softdeletable = $flag;
         return $this;
     }
@@ -74,13 +75,13 @@ abstract class AbstractHandler implements HandlerInterface
      */
     protected function import($data, $className, $flush, OutputInterface $output = null)
     {
-        if(!$output){
+        if (!$output) {
             $output = new NullOutput();
         }
 
         $em = $this->entityManager;
 
-        if($this->softdeletable){
+        if ($this->softdeletable) {
             $em->getFilters()->disable('softdeleteable');
             $output->writeln('<comment>---Disable softdeleteable---</comment>');
         }
@@ -94,8 +95,7 @@ abstract class AbstractHandler implements HandlerInterface
 
         $this->writeResultBagToOutput($output, $resultBag);
 
-        if(true === $flush){
-
+        if (true === $flush) {
             $reflection = new \ReflectionClass($className);
             if ($this->softdeletable && (!$reflection->hasProperty('deletedAt') || !$reflection->hasMethod('setDeletedAt') || !$reflection->hasMethod('getDeletedAt'))) {
                 throw new MethodNotFoundException(sprintf('It seems that the entity "%s" is not softdeleteable', $className));
@@ -103,11 +103,10 @@ abstract class AbstractHandler implements HandlerInterface
 
             $this->removeUnneededEntities($output, $resultBag);
 
-            if ($resultBag->hasChanges()){
-
+            if ($resultBag->hasChanges()) {
                 $entities = array_merge($resultBag->getNew(), $resultBag->getChanged());
-                foreach($entities as $entity){
-                    if($this->softdeletable){
+                foreach ($entities as $entity) {
+                    if ($this->softdeletable) {
                         $entity->setDeletedAt(null);
                     }
                     $em->persist($entity);
@@ -116,10 +115,9 @@ abstract class AbstractHandler implements HandlerInterface
                 $output->writeln('<info>Persisted ' . count($entities) . ' Entries</info>');
                 $em->flush();
             }
-
         }
 
-        if($this->softdeletable){
+        if ($this->softdeletable) {
             $em->getFilters()->enable('softdeleteable');
             $output->writeln('<comment>---Enable softdeleteable---</comment>');
         }
@@ -130,8 +128,8 @@ abstract class AbstractHandler implements HandlerInterface
         $em = $this->entityManager;
 
         $output->writeln('<error>Removing ' . $resultBag->countRemoving() . ' Entries</error>');
-        foreach ($resultBag->getRemoving() as $entity){
-            if(!$this->softdeletable || null === $entity->getDeletedAt()){
+        foreach ($resultBag->getRemoving() as $entity) {
+            if (!$this->softdeletable || null === $entity->getDeletedAt()) {
                 $em->remove($entity);
             }
         }

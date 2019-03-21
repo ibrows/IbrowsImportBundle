@@ -13,6 +13,6 @@ class String extends AbstractMapping
      */
     public function transformToPHP($value)
     {
-        return (string)$value;
+        return (string) $value;
     }
 }

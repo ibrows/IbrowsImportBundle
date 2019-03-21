@@ -103,8 +103,6 @@ abstract class AbstractMapping implements MappingInterface
      */
     public function ignoreNotExistent()
     {
-       return $this->ignoreNotExistent;
+        return $this->ignoreNotExistent;
     }
-
-
 }

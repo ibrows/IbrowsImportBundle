@@ -15,5 +15,4 @@
             <argument type="service" id="ibrows_importbundle.annotationreader" />
         </service>
     </services>
-
 </container>

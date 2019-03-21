@@ -44,7 +44,6 @@ class ImportAnnotationReader extends AnnotationReader implements ImportAnnotatio
      */
     public function getCompareAnnotations($entity)
     {
-       return $this->getAnnotationsByType($entity, self::ANNOTATION_TYPE_COMPARE, self::SCOPE_PROPERTY);
-
+        return $this->getAnnotationsByType($entity, self::ANNOTATION_TYPE_COMPARE, self::SCOPE_PROPERTY);
     }
 }

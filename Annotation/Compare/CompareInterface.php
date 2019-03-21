@@ -1,6 +1,7 @@
 <?php
 
 namespace Ibrows\ImportBundle\Annotation\Compare;
+
 use Ibrows\ImportBundle\Annotation\ResolveByImporterInterface;
 
 interface CompareInterface extends ResolveByImporterInterface
@@ -15,5 +16,4 @@ interface CompareInterface extends ResolveByImporterInterface
      * @return string
      */
     public function getGetterName();
-
 }

@@ -7,5 +7,4 @@ namespace Ibrows\ImportBundle\Annotation\Mapping;
  */
 class SimpleArray extends AbstractMapping
 {
-
 }

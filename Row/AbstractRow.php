@@ -34,8 +34,8 @@ abstract class AbstractRow implements RowInterface
      */
     public function get($fieldName)
     {
-        foreach($this->fields as $field){
-            if($field->getName() == $fieldName){
+        foreach ($this->fields as $field) {
+            if ($field->getName() == $fieldName) {
                 return $field;
             }
         }
