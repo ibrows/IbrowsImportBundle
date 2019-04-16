@@ -5,7 +5,7 @@ namespace Ibrows\ImportBundle\Annotation\Mapping;
 /**
  * @Annotation
  */
-class String extends AbstractMapping
+class StringMap extends AbstractMapping
 {
     /**
      * @param mixed $value
